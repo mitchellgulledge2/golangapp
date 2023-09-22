@@ -14,6 +14,21 @@ var (
 	geniusMITCHELL string = "Mitchell"
 )
 
+// enumerated constant example
+const (
+	// initial value of iota is the same as a 0 value for an integer
+	aConstant = iota // iota is a counter we can use when making enumerated constants
+	bConstant = 1 << iota // using bitshifting with iota
+	cConstant = iota
+
+	// there is a write only variable that you can use in GO by typing _
+	// we dont need to store this value in memory
+	_ = iota + 5
+	// value of constant must be able to be determined at compile time
+	// you can do things like addition (used for fixed offsets)
+
+)
+
 // lower case variables are scoped to the package
 // current package is main
 // if we switch a variable to an uppercase letter I instead of i
@@ -220,28 +235,53 @@ func main() {
 		// UTF32 alias for int32
 
 	// Moving onto Constants in GOLANG
-	// 
+	// creating constant below
+	const myConst int =42
+	// typed constant created by declaring int
+	fmt.Printf("%v, %T\n", myConst,myConst)
+	// contants can be int, str, float32, bool etc
+	// constants can be shadowed just like variables can
+		// meaning we can create constant outside function and redefine value inside function
+		// inner declaration constant value always wins
 
+	var bc int = 27
+	// adding constant and variable
+	// do not have to declare the constant type, GO can infer the constant type int at compile time
+	fmt.Printf("%v, %T\n", myConst + bc, myConst + bc)
 
+	// printing enumerated constants created outside function
+	// noting that since the below constants were made outside main function they can be shadowed
+	fmt.Printf("%v\n", aConstant) // iota set at 0
+	fmt.Printf("%v\n", bConstant) // iota infers 1 after iota = 1 (because in same constant block ())
+	fmt.Printf("%v\n", cConstant) // iota infers 1 after iota = 2 (because in same constant block ())
 
+	// setting variable equal to constant 
+	var testVariable int = aConstant
+	fmt.Printf("%v,\n", testVariable== aConstant)
 
+	const kk = 1 << (10 * iota) // you can use bitshifting with iota
+	fmt.Printf("%v,\n", kk)
 
+	// you can use bit shifting to set boolean flags inside of a single byte
+	// OR'ing together 3 different constants in same constant flag using iota
+	var roles byte = aConstant | bConstant | cConstant
+	fmt.Printf("%b\n", roles)
 
+	fmt.Printf("Is True? %v\n", aConstant == bConstant)
 
+	// constants are immutable but can be shadowed
+	// constants are replaced by compiler at compile time
+		// value must be calculable at compile time
+	// Named just like variables
+	// Typed constants work just like immutables
+		// can only operate with same type
+	// untyped contants work like literals
+		// can interoperate with similar types
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	// enumerated constants
+		// iota allows related constants to be easily created
+		// iota starts at 0 in each constant block and increments by 1
+	// enumerated expressions
+		// operations can be determined at compile time (+, -, *, /, >>, <<, and, or, xor and not)
+	
 }
